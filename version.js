@@ -11,7 +11,7 @@ const fs = require('fs')
  * @param {number} [patch] increment patch by number
  * @param {string} [replace] replace entry with this string
  */
-function version(filename, options)
+module.exports = function version(filename, options)
 {
     if (!options)
     {
@@ -86,5 +86,3 @@ function version(filename, options)
     fs.writeFileSync(filename, JSON.stringify(json))
     return { original: current, updated }
 }
-
-module.exports = version
