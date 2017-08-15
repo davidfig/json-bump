@@ -45,5 +45,5 @@ bumps the "version" entry for a .json file
 - {number} [patch] increment patch by number
 - {string} [replace] replace entry with this string
 
-MIT License
-(c) 2017 David Figatner (YOPEY YOPEY LLC)
+MIT License  
+(c) 2017 [YOPEY YOPEY LLC](https://yopeyopey.com/) by [David Figatner](https://twitter.com/yopey_yopey/)
