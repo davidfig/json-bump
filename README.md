@@ -47,5 +47,6 @@ bumps the "version" entry for a .json file
 - {string} [replace] replace entry with this string
 - {number} [spaces=4] number of spaces to format the .json file (set to 0 to remove spaces)
 
+## license  
 MIT License  
 (c) 2017 [YOPEY YOPEY LLC](https://yopeyopey.com/) by [David Figatner](https://twitter.com/yopey_yopey/)
