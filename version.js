@@ -1,4 +1,4 @@
-const fs = require('fs')
+const jsonfile = require('jsonfile')
 
 /**
  * bumps the "version" entry for a .json file
@@ -10,6 +10,7 @@ const fs = require('fs')
  * @param {number} [minor] increment minor by number (resetting PATCH to 0)
  * @param {number} [patch] increment patch by number
  * @param {string} [replace] replace entry with this string
+ * @param {number=4} [spaces] number of spaces to format jsonfile (set to 0 to remove all spaces)
  */
 module.exports = function version(filename, options)
 {
@@ -22,29 +23,20 @@ module.exports = function version(filename, options)
     {
         options.patch = 1
     }
-    let raw
+    options.spaces = typeof options.spaces === 'undefined' ? 4 : options.spaces
+    let json
     try
     {
         if (filename.indexOf('/') === -1 && filename.indexOf('\\') === -1)
         {
-            filename = __dirname + '/' + filename
+            filename = process.cwd() + '/' + filename
         }
-        raw = fs.readFileSync(filename)
+        json = jsonfile.readFileSync(filename)
     }
     catch (e)
     {
         console.error('ERROR opening file ' + filename + ' (' + e.error + ')')
         process.exit(1)
-    }
-    let json
-    try
-    {
-        json = JSON.parse(raw)
-    }
-    catch (e)
-    {
-        console.error('ERROR parsing file ' + filename + ' (' + e.error + ')')
-        process.exit(2)
     }
     options.entry = options.entry || 'version'
     const current = json[options.entry]
@@ -83,6 +75,6 @@ module.exports = function version(filename, options)
     }
     json[options.entry] = parseInt(split[0]) + '.' + parseInt(split[1]) + '.' + parseInt(split[2])
     updated = json[options.entry]
-    fs.writeFileSync(filename, JSON.stringify(json))
+    jsonfile.writeFileSync(filename, json, { spaces: options.spaces})
     return { original: current, updated }
 }
