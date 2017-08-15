@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const version = require('./version')
 
 const args = process.argv

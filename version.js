@@ -13,7 +13,6 @@ const fs = require('fs')
  */
 function version(filename, options)
 {
-    let result = {}
     if (!options)
     {
         console.error('ERROR: must provide options for version(filename, options)')
