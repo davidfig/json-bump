@@ -26,10 +26,11 @@ An easy to use component to bump the [semver](http://semver.org/) version of a J
 
     --replace=semver   this replaces the entire semver with the given string
 
-    --major=1          increment the major version (increments by 1 if not specified)
-    --minor=1          increment the minor version (increments by 1 if not specified)
-    --patch=1          increment the patch version (increments by 1 if not specified)
+    --major=1          increment the major version (increments by 1 if flagged but not specified)
+    --minor=1          increment the minor version (increments by 1 if flagged but not specified)
+    --patch=1          increment the patch version (increments by 1 if flagged but not specified)
     --entry=name       change entry updated (defaults is "version")
+    --spaces=4          number of spaces to format the .json file (set to 0 to remove spaces)
 
     If no flags are specified, increments PATCH by 1
 
@@ -44,6 +45,7 @@ bumps the "version" entry for a .json file
 - {number} [minor] increment minor by number (resetting PATCH to 0)
 - {number} [patch] increment patch by number
 - {string} [replace] replace entry with this string
+- {number} [spaces=4] number of spaces to format the .json file (set to 0 to remove spaces)
 
 MIT License  
 (c) 2017 [YOPEY YOPEY LLC](https://yopeyopey.com/) by [David Figatner](https://twitter.com/yopey_yopey/)
