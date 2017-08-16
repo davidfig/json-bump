@@ -12,9 +12,12 @@ An easy to use component to bump the [semver](http://semver.org/) version of a J
 ## programmatic example
 
     const bump = require('json-bump')
-    bump('package.json', { major: 0 })
+    bump('package.json', { major: 1 })
 
 ## command-line example
+
+    $ json-bump package.json
+    Updated package.json version from 0.1.2 to 0.1.3
 
     $ json-bump data.json --minor
     Updated data.json version from 1.0.5 to 1.1.0
@@ -32,7 +35,7 @@ An easy to use component to bump the [semver](http://semver.org/) version of a J
     --entry=name       change entry updated (defaults is "version")
     --spaces=4          number of spaces to format the .json file (set to 0 to remove spaces)
 
-    If no flags are specified, increments PATCH by 1
+    If no FLAGS are specified, increments PATCH by 1
 
 ## API
 

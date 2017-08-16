@@ -1,6 +1,6 @@
 {
     "name": "json-bump",
-    "version": "0.1.2",
+    "version": "0.1.3",
     "description": "bumps the \"version\" entry for a JSON file",
     "main": "version.js",
     "scripts": {
