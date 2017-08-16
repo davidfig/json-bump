@@ -11,6 +11,7 @@ const jsonfile = require('jsonfile')
  * @param {number} [patch] increment patch by number
  * @param {string} [replace] replace entry with this string
  * @param {number=4} [spaces] number of spaces to format jsonfile (set to 0 to remove all spaces)
+ * @return {object.<string, string>} returns { original, updated }
  */
 module.exports = function version(filename, options)
 {

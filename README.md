@@ -46,6 +46,7 @@ bumps the "version" entry for a .json file
 - {number} [patch] increment patch by number
 - {string} [replace] replace entry with this string
 - {number} [spaces=4] number of spaces to format the .json file (set to 0 to remove spaces)
+- returns: { updated: string, original: string }
 
 ## license  
 MIT License  
