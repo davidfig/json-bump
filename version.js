@@ -4,7 +4,7 @@ const jsonfile = require('jsonfile')
  * bumps the "version" entry for a .json file
  * defaults to incrementing PATCH by 1 if no options are provided
  * @param {string} filename
- * @param {object} options
+ * @param {object} [options]
  * @param {string="version"} [entry] name of entry to change
  * @param {number} [major] increment major by number (resetting MINOR and PATCH to 0)
  * @param {number} [minor] increment minor by number (resetting PATCH to 0)
@@ -15,11 +15,7 @@ const jsonfile = require('jsonfile')
  */
 module.exports = function version(filename, options)
 {
-    if (!options)
-    {
-        console.error('ERROR: must provide options for version(filename, options)')
-        process.exit(3)
-    }
+    options = options || {}
     if (!options.replace && !options.major && !options.minor && !options.patch)
     {
         options.patch = 1
