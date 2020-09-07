@@ -1,6 +1,9 @@
 # json-bump
 bumps the "version" entry for a JSON file
 
+## Version 1.0.0 note
+With version 1.0.0, the node.js version returns a promise. Use async/await to ensure package.json gets properly written.
+
 ## rationale
 
 An easy to use component to bump the [semver](http://semver.org/) version of a JSON file. Includes both an exported package and a CLI.
@@ -10,9 +13,14 @@ An easy to use component to bump the [semver](http://semver.org/) version of a J
     npm i json-bump
 
 ## programmatic example
+```js
+const bump = require('json-bump')
 
-    const bump = require('json-bump')
-    bump('package.json', { major: 1 })
+async function update() {
+    await bump('package.json', { replace: '1.0.1' })
+}
+update()
+```
 
 ## command-line example
 
@@ -39,7 +47,7 @@ An easy to use component to bump the [semver](http://semver.org/) version of a J
 
 ## API
 
-### function version(filename, options)
+### async function version(filename, options)
 bumps the "version" entry for a .json file
 - {string} filename
 - {object} [options] defaults to incrementing PATCH by 1 if no options are provided
