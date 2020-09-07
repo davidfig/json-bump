@@ -49,8 +49,8 @@ bumps the "version" entry for a .json file
 - {number} [patch] increment patch by number
 - {string} [replace] replace entry with this string
 - {number} [spaces=4] number of spaces to format the .json file (set to 0 to remove spaces)
-- returns: { updated: string, original: string }
+- returns: { updated: string, original: string, major: number, minor: number, patch: number }
 
-## license  
-MIT License  
-(c) 2017 [YOPEY YOPEY LLC](https://yopeyopey.com/) by [David Figatner](https://twitter.com/yopey_yopey/)
+## license
+MIT License
+(c) 2020 [YOPEY YOPEY LLC](https://yopeyopey.com/) by [David Figatner](https://twitter.com/yopey_yopey/)

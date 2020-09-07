@@ -1,10 +1,11 @@
 {
     "name": "json-bump",
-    "version": "0.1.4",
+    "version": "1.0.0",
     "description": "bumps the \"version\" entry for a JSON file",
     "main": "version.js",
     "scripts": {
-        "test": "node index.js test/test.json"
+        "test": "node test/test",
+        "prepublishOnly": "yarn test"
     },
     "repository": {
         "type": "git",
@@ -26,6 +27,6 @@
         "json-bump": "index.js"
     },
     "dependencies": {
-        "jsonfile": "^3.0.1"
+        "fs-extra": "^9.0.1"
     }
 }
