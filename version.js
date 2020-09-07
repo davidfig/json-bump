@@ -27,7 +27,7 @@ module.exports = async function version(filename, options={}) {
     if (!options.replace && !options.major && !options.minor && !options.patch && !options.readOnly) {
         options.patch = 1
     }
-    options.spaces = typeof options.spaces === 'undefined' ? 4 : options.spaces
+    options.spaces = typeof options.spaces === 'undefined' ? 4 : parseInt(options.spaces)
     let json
     try {
         if (filename.indexOf('/') === -1 && filename.indexOf('\\') === -1) {
@@ -65,7 +65,7 @@ module.exports = async function version(filename, options={}) {
         json[options.entry] = parseInt(split[0]) + '.' + parseInt(split[1]) + '.' + parseInt(split[2])
     }
     updated = json[options.entry]
-    await fs.writeJSON(filename, json, { spaces: options.spaces})
+    await fs.writeJSON(filename, json, { spaces: options.spaces })
     if (split.length === 3) {
         return { original: current, updated, major: split[0], minor: split[1], patch: split[2] }
     } else {
