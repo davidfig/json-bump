@@ -69,8 +69,8 @@ module.exports = function version(filename, options)
         {
             split[2] = parseInt(split[2]) + options.patch
         }
+        json[options.entry] = parseInt(split[0]) + '.' + parseInt(split[1]) + '.' + parseInt(split[2])
     }
-    json[options.entry] = parseInt(split[0]) + '.' + parseInt(split[1]) + '.' + parseInt(split[2])
     updated = json[options.entry]
     jsonfile.writeFileSync(filename, json, { spaces: options.spaces})
     return { original: current, updated }
