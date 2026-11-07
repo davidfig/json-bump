@@ -11,7 +11,7 @@ function help() {
     console.log('  --major=1          increment the major version (increments by 1 if not specified)')
     console.log('  --minor=1          increment the minor version (increments by 1 if not specified)')
     console.log('  --patch=1          increment the patch version (increments by 1 if not specified)')
-    console.log('  --entry=name       change entry updated (defaults is "version")\n')
+    console.log('  --entry=name       change entry updated, with dots for nested fields (defaults is "version")\n')
     console.log('  --spaces=4         number of spaces to format the .json file (set to 0 to remove spaces)')
     console.log('If no flags are specified, increments PATCH by 1\n')
 }
