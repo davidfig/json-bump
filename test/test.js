@@ -49,6 +49,10 @@ async function testNested() {
     result = await bump(file, { entry: 'expo.version', readOnly: true })
     if (result.original !== '1.1.0') fail('nested readOnly test failed')
 
+    result = await bump(file, { entry: 'missing.path.version', readOnly: true })
+    json = await fs.readJSON(file)
+    if (result.original !== '' || 'missing' in json) fail('nested readOnly on a missing path test failed')
+
     await bump(file, { entry: 'a.b' })
     json = await fs.readJSON(file)
     if (json['a.b'] !== '1.0.1' || json.a.b !== '2.0.0') fail('exact key with a dot test failed')

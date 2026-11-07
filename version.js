@@ -13,9 +13,10 @@ const fs = require('fs-extra')
  * finds the object and key that hold an entry; an exact top-level key wins over a dotted path
  * @param {object} json
  * @param {string} entry
+ * @param {boolean} [readOnly] don't add missing parents to json
  * @returns {{ parent: object, key: string }}
  */
-function resolveEntry(json, entry) {
+function resolveEntry(json, entry, readOnly) {
     if (Object.prototype.hasOwnProperty.call(json, entry)) {
         return { parent: json, key: entry }
     }
@@ -24,6 +25,9 @@ function resolveEntry(json, entry) {
     let parent = json
     for (const part of path) {
         if (!Object.prototype.hasOwnProperty.call(parent, part)) {
+            if (readOnly) {
+                return { parent: {}, key }
+            }
             parent[part] = {}
         } else if (parent[part] === null || typeof parent[part] !== 'object') {
             console.error(`ERROR "${part}" in entry "${entry}" is not an object`)
@@ -64,7 +68,7 @@ module.exports = async function version(filename, options={}) {
         process.exit(1)
     }
     options.entry = options.entry || 'version'
-    const { parent, key } = resolveEntry(json, options.entry)
+    const { parent, key } = resolveEntry(json, options.entry, options.readOnly)
     const current = parent[key] || ''
     let updated, split
     if (options.replace) {
