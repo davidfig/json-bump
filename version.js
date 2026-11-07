@@ -9,12 +9,37 @@ const fs = require('fs-extra')
  * @property {number} [patch] {_._.n} not sent if replace is not in n.n.n format
  */
 
+/**
+ * finds the object and key that hold an entry; an exact top-level key wins over a dotted path
+ * @param {object} json
+ * @param {string} entry
+ * @returns {{ parent: object, key: string }}
+ */
+function resolveEntry(json, entry) {
+    if (Object.prototype.hasOwnProperty.call(json, entry)) {
+        return { parent: json, key: entry }
+    }
+    const path = entry.split('.')
+    const key = path.pop()
+    let parent = json
+    for (const part of path) {
+        if (!Object.prototype.hasOwnProperty.call(parent, part)) {
+            parent[part] = {}
+        } else if (parent[part] === null || typeof parent[part] !== 'object') {
+            console.error(`ERROR "${part}" in entry "${entry}" is not an object`)
+            process.exit(1)
+        }
+        parent = parent[part]
+    }
+    return { parent, key }
+}
+
  /**
  * bumps the "version" entry for a .json file
  * defaults to incrementing PATCH by 1 if no options are provided
  * @param {string} filename
  * @param {object} [options]
- * @param {string="version"} [entry] name of entry to change
+ * @param {string="version"} [entry] name of entry to change; use dots for nested fields (e.g., "expo.version")
  * @param {boolean} [readOnly] return the original version without changing
  * @param {number} [major] increment major by number (resetting MINOR and PATCH to 0)
  * @param {number} [minor] increment minor by number (resetting PATCH to 0)
@@ -39,10 +64,11 @@ module.exports = async function version(filename, options={}) {
         process.exit(1)
     }
     options.entry = options.entry || 'version'
-    const current = json[options.entry] || ''
+    const { parent, key } = resolveEntry(json, options.entry)
+    const current = parent[key] || ''
     let updated, split
     if (options.replace) {
-        json[options.entry] = options.replace
+        parent[key] = options.replace
         split = current.split('.')
     } else if (options.readOnly) {
         split = current.split('.')
@@ -62,9 +88,9 @@ module.exports = async function version(filename, options={}) {
         } else if (options.patch) {
             split[2] = parseInt(split[2]) + options.patch
         }
-        json[options.entry] = parseInt(split[0]) + '.' + parseInt(split[1]) + '.' + parseInt(split[2])
+        parent[key] = parseInt(split[0]) + '.' + parseInt(split[1]) + '.' + parseInt(split[2])
     }
-    updated = json[options.entry]
+    updated = parent[key]
     await fs.writeJSON(filename, json, { spaces: options.spaces })
     if (split.length === 3) {
         return { original: current, updated, major: split[0], minor: split[1], patch: split[2] }

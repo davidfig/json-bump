@@ -30,6 +30,9 @@ update()
     $ json-bump data.json --minor
     Updated data.json version from 1.0.5 to 1.1.0
 
+    $ json-bump app.json --minor --entry=expo.version
+    Updated app.json expo.version from 1.0.5 to 1.1.0
+
     $ json-bump
 
     Usage: json-bump FILENAME [FLAGS]
@@ -40,7 +43,7 @@ update()
     --major=1          increment the major version (increments by 1 if flagged but not specified)
     --minor=1          increment the minor version (increments by 1 if flagged but not specified)
     --patch=1          increment the patch version (increments by 1 if flagged but not specified)
-    --entry=name       change entry updated (defaults is "version")
+    --entry=name       change entry updated, with dots for nested fields like expo.version (defaults is "version")
     --spaces=4          number of spaces to format the .json file (set to 0 to remove spaces)
 
     If no FLAGS are specified, increments PATCH by 1
@@ -51,7 +54,7 @@ update()
 bumps the "version" entry for a .json file
 - {string} filename
 - {object} [options] defaults to incrementing PATCH by 1 if no options are provided
-- {string="version"} [entry] name of entry to change
+- {string="version"} [entry] name of entry to change; use dots for nested fields (e.g., "expo.version")
 - {number} [major] increment major by number (resetting MINOR and PATCH to 0)
 - {number} [minor] increment minor by number (resetting PATCH to 0)
 - {number} [patch] increment patch by number

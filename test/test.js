@@ -27,7 +27,41 @@ async function test() {
 
     await testModule()
     await testCLI()
+    await testNested()
     console.log('All tests passed.\n')
+}
+
+async function testNested() {
+    console.log('Testing nested entries...')
+    const file = 'test/test-nested.json'
+    const fail = message => {
+        console.error(message)
+        process.exit(1)
+    }
+
+    await fs.outputFile(file, JSON.stringify({ version: '9.9.9', expo: { version: '1.0.5' }, 'a.b': '1.0.0', a: { b: '2.0.0' } }))
+
+    let result = await bump(file, { minor: 1, entry: 'expo.version' })
+    if (result.original !== '1.0.5' || result.updated !== '1.1.0') fail('nested entry test failed')
+    let json = await fs.readJSON(file)
+    if (json.expo.version !== '1.1.0' || json.version !== '9.9.9' || 'expo.version' in json) fail('nested entry write test failed')
+
+    result = await bump(file, { entry: 'expo.version', readOnly: true })
+    if (result.original !== '1.1.0') fail('nested readOnly test failed')
+
+    await bump(file, { entry: 'a.b' })
+    json = await fs.readJSON(file)
+    if (json['a.b'] !== '1.0.1' || json.a.b !== '2.0.0') fail('exact key with a dot test failed')
+
+    await bump(file, { entry: 'new.path.version', replace: '3.0.0' })
+    json = await fs.readJSON(file)
+    if (json.new.path.version !== '3.0.0') fail('missing parent test failed')
+
+    const output = await exec(`node index.js ${file} --major --entry=expo.version`)
+    json = await fs.readJSON(file)
+    if (json.expo.version !== '2.0.0' || output.indexOf('expo.version from 1.1.0 to 2.0.0') === -1) fail('nested CLI test failed')
+
+    await fs.unlink(file)
 }
 
 async function testModule() {
